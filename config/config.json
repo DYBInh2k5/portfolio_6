@@ -1,0 +1,60 @@
+{
+  "site": {
+    "title": "Võ Duy Bình | coDY",
+    "base_url": "/",
+    "favicon": "/images/favicon.png",
+    "logo": "/images/logo.png",
+    "logo_white": "/images/logo-light.png",
+    "logo_width": "150",
+    "logo_height": "39",
+    "logo_text": "coDY"
+  },
+  "settings": {
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 6,
+    "innerPaginationOptions": {
+      "enableTop": false,
+      "enableBottom": true
+    },
+    "summary_length": 200,
+    "blog_folder": "posts"
+  },
+  "params": {
+    "tag_manager_id": "",
+    "footer_content": "Senior Full Stack Developer & AI Specialist | Content Creator & KOL | Digital Marketing Expert",
+    "copyright": "© 2025 Võ Duy Bình (coDY). All rights reserved."
+  },
+  "metadata": {
+    "meta_author": "Võ Duy Bình",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Võ Duy Bình (coDY) - Senior Full Stack Developer, AI Specialist, Content Creator & KOL. Based in Ho Chi Minh City, Vietnam."
+  },
+  "widgets": {
+    "about": {
+      "enable": true,
+      "content": "Senior Full Stack Developer & AI Specialist with passion for technology, content creation, and digital marketing. Building tomorrow's technology today!"
+    },
+    "featured_posts": {
+      "enable": true,
+      "title": "Blog Categories",
+      "showPost": 3
+    },
+    "categories": {
+      "enable": true,
+      "title": "Blog Categories"
+    },
+    "newsletter": {
+      "enable": true,
+      "title": "Newsletter",
+      "content": "Subscribe to get the latest updates on AI, technology, and content creation!",
+      "privacy_policy_page": "#",
+      "malichipm_url": ""
+    }
+  },
+  "disqus": {
+    "enable": true,
+    "shortname": "themefisher-template",
+    "settings": {}
+  }
+}

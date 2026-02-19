@@ -1,0 +1,10 @@
+
+> geeky-nextjs@1.0.5 dev
+> node lib/jsonGenerator.js && next dev
+
+[32mready[39m - started server on 0.0.0.0:3000, url: http://localhost:3000
+[33mwarn[39m  - Invalid next.config.js options detected: 
+  - The value at .assetPrefix must be 1 character or more but it was 0 characters.
+
+See more info here: https://nextjs.org/docs/messages/invalid-next-config
+[35mevent[39m - compiled client and server successfully in 821 ms (183 modules)
