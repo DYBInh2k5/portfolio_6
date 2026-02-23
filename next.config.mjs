@@ -1,11 +1,10 @@
 
-const isProd = process.env.NODE_ENV === "production";
-
-const basePath = isProd ? "/geeky-nextjs" : "";
+const isGitHubPages = process.env.DEPLOY_TARGET === "gh-pages";
+const basePath = isGitHubPages ? "/geeky-nextjs" : "";
 
 const nextConfig = {
   basePath,
-  assetPrefix: basePath,
+  assetPrefix: isGitHubPages ? basePath : undefined,
   images: {
     unoptimized: true,
   },
