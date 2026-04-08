@@ -1,4 +1,5 @@
 import config from "@config/config.json";
+import social from "@config/social.json";
 import { plainify } from "@lib/utils/textConverter";
 import Footer from "@partials/Footer";
 import Header from "@partials/Header";
@@ -15,8 +16,68 @@ const Base = ({
   children,
 }) => {
   const { meta_image, meta_author, meta_description } = config.metadata;
-  const { base_url } = config.site;
+  const { base_url, title: siteTitle } = config.site;
   const router = useRouter();
+
+  const derivedBaseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (typeof base_url === "string" && base_url.startsWith("http")
+      ? base_url
+      : social.website || "https://example.com");
+
+  const currentPath = router.asPath === "/" ? "" : router.asPath;
+  const currentUrl = `${derivedBaseUrl}${currentPath}`;
+  const sameAs = Object.values(social).filter(
+    (value) => typeof value === "string" && value.startsWith("http")
+  );
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: meta_author,
+    url: derivedBaseUrl,
+    image: `${derivedBaseUrl}${meta_image}`,
+    sameAs,
+    jobTitle: "Senior Full Stack Developer & AI Specialist",
+    knowsAbout: [
+      "Next.js",
+      "React",
+      "Firebase",
+      "Machine Learning",
+      "Technical SEO",
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Ho Chi Minh City",
+      addressCountry: "VN",
+    },
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteTitle,
+    url: derivedBaseUrl,
+    inLanguage: "vi",
+    author: {
+      "@type": "Person",
+      name: meta_author,
+    },
+  };
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: siteTitle,
+    url: derivedBaseUrl,
+    description: meta_description,
+    areaServed: "Global",
+    availableLanguage: ["Vietnamese", "English"],
+    provider: {
+      "@type": "Person",
+      name: meta_author,
+    },
+  };
 
   return (
     <>
@@ -59,7 +120,7 @@ const Base = ({
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`${base_url}/${router.asPath.replace("/", "")}`}
+          content={currentUrl}
         />
 
         {/* twitter-title */}
@@ -79,15 +140,28 @@ const Base = ({
         {/* og-image */}
         <meta
           property="og:image"
-          content={`${base_url}${image ? image : meta_image}`}
+          content={`${derivedBaseUrl}${image ? image : meta_image}`}
         />
 
         {/* twitter-image */}
         <meta
           name="twitter:image"
-          content={`${base_url}${image ? image : meta_image}`}
+          content={`${derivedBaseUrl}${image ? image : meta_image}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
       </Head>
       <Header />
       {/* main site */}

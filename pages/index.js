@@ -20,6 +20,10 @@ const Home = ({
   recent_posts,
   categories,
   promotion,
+  service_packages,
+  case_studies,
+  testimonials,
+  lead_magnet,
 }) => {
   // define state
   const sortPostByDate = sortByDate(posts);
@@ -160,6 +164,97 @@ const Home = ({
                 </div>
               )}
 
+              {/* Service Packages */}
+              {service_packages?.enable && service_packages?.items?.length > 0 && (
+                <div className="section pt-0">
+                  {markdownify(service_packages.title, "h2", "section-title")}
+                  <div className="row">
+                    {service_packages.items.map((item, index) => (
+                      <div className="mb-6 md:col-4" key={`package-${index}`}>
+                        <div className="h-full rounded border border-border p-6 dark:border-darkmode-border">
+                          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-primary">
+                            {item.timeline}
+                          </p>
+                          <h3 className="h4 mb-2">{item.name}</h3>
+                          <p className="mb-4 text-sm text-light dark:text-darkmode-light">
+                            {item.price}
+                          </p>
+                          <p className="mb-6">{item.outcome}</p>
+                          {item.cta_link && (
+                            <Link className="btn btn-outline-primary btn-sm" href={item.cta_link}>
+                              {item.cta_label || "Get Details"}
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Case Studies */}
+              {case_studies?.enable && case_studies?.items?.length > 0 && (
+                <div className="section pt-0">
+                  {markdownify(case_studies.title, "h2", "section-title")}
+                  <div className="rounded border border-border p-6 dark:border-darkmode-border">
+                    <div className="row">
+                      {case_studies.items.map((item, index) => (
+                        <div className="mb-6 lg:mb-0 lg:col-4" key={`case-${index}`}>
+                          <h3 className="h5 mb-3">{item.name}</h3>
+                          <p className="mb-2 text-sm font-semibold text-primary">{item.impact}</p>
+                          <p className="mb-4 text-sm">{item.summary}</p>
+                          {item.link && (
+                            <Link className="text-primary font-semibold hover:underline" href={item.link}>
+                              {item.link_label || "View Project"}
+                            </Link>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Testimonials */}
+              {testimonials?.enable && testimonials?.items?.length > 0 && (
+                <div className="section pt-0">
+                  {markdownify(testimonials.title, "h2", "section-title")}
+                  <div className="row">
+                    {testimonials.items.map((item, index) => (
+                      <div className="mb-6 md:col-6" key={`testimonial-${index}`}>
+                        <div className="h-full rounded border border-border p-6 dark:border-darkmode-border">
+                          <p className="mb-4 italic">"{item.quote}"</p>
+                          <p className="font-semibold">{item.author}</p>
+                          <p className="text-sm text-light dark:text-darkmode-light">{item.role}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Lead Magnet */}
+              {lead_magnet?.enable && (
+                <div className="section pt-0">
+                  <div className="rounded border border-primary bg-theme-light p-8 text-center dark:bg-darkmode-theme-dark">
+                    {markdownify(lead_magnet.title, "h2", "mb-3")}
+                    <p className="mx-auto mb-6 max-w-2xl">{lead_magnet.content}</p>
+                    <div className="flex flex-wrap items-center justify-center gap-3">
+                      {lead_magnet.primary_link && (
+                        <Link className="btn btn-primary" href={lead_magnet.primary_link}>
+                          {lead_magnet.primary_label || "Book a call"}
+                        </Link>
+                      )}
+                      {lead_magnet.secondary_link && (
+                        <Link className="btn btn-outline-primary" href={lead_magnet.secondary_link}>
+                          {lead_magnet.secondary_label || "Download"}
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <Pagination
                 totalPages={Math.ceil(posts.length / showPosts)}
                 currentPage={1}
@@ -184,7 +279,16 @@ export default Home;
 export const getStaticProps = async () => {
   const homepage = await getListPage("content/_index.md");
   const { frontmatter } = homepage;
-  const { banner, featured_posts, recent_posts, promotion } = frontmatter;
+  const {
+    banner,
+    featured_posts,
+    recent_posts,
+    promotion,
+    service_packages,
+    case_studies,
+    testimonials,
+    lead_magnet,
+  } = frontmatter;
   const posts = getSinglePage(`content/${blog_folder}`);
   const categories = getTaxonomy(`content/${blog_folder}`, "categories");
 
@@ -205,6 +309,10 @@ export const getStaticProps = async () => {
       featured_posts,
       recent_posts,
       promotion,
+      service_packages,
+      case_studies,
+      testimonials,
+      lead_magnet,
       categories: categoriesWithPostsCount,
     },
   };
