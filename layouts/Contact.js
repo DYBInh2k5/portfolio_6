@@ -1,4 +1,5 @@
 import { markdownify } from "@lib/utils/textConverter";
+import { trackEvent } from "@lib/utils/analytics";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -30,6 +31,14 @@ const Contact = ({ data }) => {
   const handleSubmit = async (e) => {
     if (hasExternalFormAction) return;
     e.preventDefault();
+
+    trackEvent({
+      event: "contact_submit_attempt",
+      category: "contact",
+      action: "submit_form",
+      label: formState.subject || "contact_form",
+    });
+
     setNotice(null);
     setSubmitting(true);
 
@@ -49,6 +58,11 @@ const Contact = ({ data }) => {
         type: "success",
         message: "Message sent successfully. I will reply soon.",
       });
+      trackEvent({
+        event: "contact_submit_success",
+        category: "contact",
+        action: "api_success",
+      });
       setFormState({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       if (mail) {
@@ -59,12 +73,23 @@ const Contact = ({ data }) => {
           `Name: ${formState.name}\nEmail: ${formState.email}\n\n${formState.message}`
         );
         const mailtoUrl = `mailto:${mail}?subject=${subject}&body=${body}`;
+        trackEvent({
+          event: "contact_submit_fallback",
+          category: "contact",
+          action: "mailto_fallback",
+        });
         window.location.href = mailtoUrl;
         setNotice({
           type: "success",
           message: "Opening your email app as fallback.",
         });
       } else {
+        trackEvent({
+          event: "contact_submit_error",
+          category: "contact",
+          action: "api_error",
+          label: error.message,
+        });
         setNotice({
           type: "error",
           message: error.message,
@@ -190,6 +215,14 @@ const Contact = ({ data }) => {
               <Link
                 href={`tel:${phone}`}
                 className="my-4 flex h-[100px] items-center justify-center rounded border border-border p-4 text-primary dark:border-darkmode-border"
+                onClick={() =>
+                  trackEvent({
+                    event: "contact_click",
+                    category: "contact",
+                    action: "phone_click",
+                    label: phone,
+                  })
+                }
               >
                 <FaUserAlt />
                 <p className="ml-1.5 text-lg font-bold text-dark dark:text-darkmode-light">{phone}</p>
@@ -201,6 +234,14 @@ const Contact = ({ data }) => {
               <Link
                 href={`mailto:${mail}`}
                 className="my-4 flex h-[100px] items-center justify-center rounded border border-border p-4 text-primary dark:border-darkmode-border"
+                onClick={() =>
+                  trackEvent({
+                    event: "contact_click",
+                    category: "contact",
+                    action: "email_click",
+                    label: mail,
+                  })
+                }
               >
                 <FaEnvelope />
                 <p className="ml-1.5 text-lg font-bold text-dark dark:text-darkmode-light">{mail}</p>

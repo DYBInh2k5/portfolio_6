@@ -7,6 +7,7 @@ import Sidebar from "@layouts/partials/Sidebar";
 import { getListPage, getSinglePage } from "@lib/contentParser";
 import { getTaxonomy } from "@lib/taxonomyParser";
 import dateFormat from "@lib/utils/dateFormat";
+import { trackEvent } from "@lib/utils/analytics";
 import { sortByDate } from "@lib/utils/sortFunctions";
 import { markdownify } from "@lib/utils/textConverter";
 import Link from "next/link";
@@ -58,6 +59,14 @@ const Home = ({
                     className="btn btn-primary mt-6"
                     href={banner.button.link}
                     rel={banner.button.rel}
+                    onClick={() =>
+                      trackEvent({
+                        event: "cta_click",
+                        category: "homepage",
+                        action: "banner_cta",
+                        label: banner.button.label,
+                      })
+                    }
                   >
                     {banner.button.label}
                   </Link>
@@ -181,10 +190,35 @@ const Home = ({
                           </p>
                           <p className="mb-6">{item.outcome}</p>
                           {item.cta_link && (
-                            <Link className="btn btn-outline-primary btn-sm" href={item.cta_link}>
+                            <Link
+                              className="btn btn-outline-primary btn-sm"
+                              href={item.cta_link}
+                              onClick={() =>
+                                trackEvent({
+                                  event: "cta_click",
+                                  category: "homepage",
+                                  action: "service_package_cta",
+                                  label: item.name,
+                                })
+                              }
+                            >
                               {item.cta_label || "Get Details"}
                             </Link>
                           )}
+                          <Link
+                            className="mt-3 inline-block text-sm font-semibold text-primary hover:underline"
+                            href="/work-with-me"
+                            onClick={() =>
+                              trackEvent({
+                                event: "cta_click",
+                                category: "homepage",
+                                action: "service_package_deep_link",
+                                label: item.name,
+                              })
+                            }
+                          >
+                            See scope and delivery process
+                          </Link>
                         </div>
                       </div>
                     ))}
@@ -204,7 +238,18 @@ const Home = ({
                           <p className="mb-2 text-sm font-semibold text-primary">{item.impact}</p>
                           <p className="mb-4 text-sm">{item.summary}</p>
                           {item.link && (
-                            <Link className="text-primary font-semibold hover:underline" href={item.link}>
+                            <Link
+                              className="text-primary font-semibold hover:underline"
+                              href={item.link}
+                              onClick={() =>
+                                trackEvent({
+                                  event: "cta_click",
+                                  category: "homepage",
+                                  action: "case_study_link",
+                                  label: item.name,
+                                })
+                              }
+                            >
                               {item.link_label || "View Project"}
                             </Link>
                           )}
@@ -241,12 +286,34 @@ const Home = ({
                     <p className="mx-auto mb-6 max-w-2xl">{lead_magnet.content}</p>
                     <div className="flex flex-wrap items-center justify-center gap-3">
                       {lead_magnet.primary_link && (
-                        <Link className="btn btn-primary" href={lead_magnet.primary_link}>
+                        <Link
+                          className="btn btn-primary"
+                          href={lead_magnet.primary_link}
+                          onClick={() =>
+                            trackEvent({
+                              event: "cta_click",
+                              category: "homepage",
+                              action: "lead_magnet_primary",
+                              label: lead_magnet.primary_label || "Book 30-min Review",
+                            })
+                          }
+                        >
                           {lead_magnet.primary_label || "Book a call"}
                         </Link>
                       )}
                       {lead_magnet.secondary_link && (
-                        <Link className="btn btn-outline-primary" href={lead_magnet.secondary_link}>
+                        <Link
+                          className="btn btn-outline-primary"
+                          href={lead_magnet.secondary_link}
+                          onClick={() =>
+                            trackEvent({
+                              event: "cta_click",
+                              category: "homepage",
+                              action: "lead_magnet_secondary",
+                              label: lead_magnet.secondary_label || "Download",
+                            })
+                          }
+                        >
                           {lead_magnet.secondary_label || "Download"}
                         </Link>
                       )}

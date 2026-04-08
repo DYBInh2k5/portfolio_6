@@ -2,7 +2,7 @@ import config from "@config/config.json";
 import { getSinglePage } from "@lib/contentParser";
 import { getAllProjects } from "@lib/firestoreProjects";
 
-const SITE_URL = "https://example.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
 const normalizeDate = (value) => {
   if (!value) return new Date().toISOString();
@@ -26,7 +26,16 @@ ${urls
 };
 
 export const getServerSideProps = async ({ res }) => {
-  const staticPages = ["/", "/about", "/contact", "/services", "/posts", "/project", "/categories"];
+  const staticPages = [
+    "/",
+    "/about",
+    "/contact",
+    "/services",
+    "/work-with-me",
+    "/posts",
+    "/project",
+    "/categories",
+  ];
   const markdownPosts = getSinglePage(`content/${config.settings.blog_folder}`);
   const projectDocs = await getAllProjects();
 
