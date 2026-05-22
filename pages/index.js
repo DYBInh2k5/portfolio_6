@@ -268,7 +268,7 @@ const Home = ({
                     {testimonials.items.map((item, index) => (
                       <div className="mb-6 md:col-6" key={`testimonial-${index}`}>
                         <div className="h-full rounded border border-border p-6 dark:border-darkmode-border">
-                          <p className="mb-4 italic">"{item.quote}"</p>
+                          <p className="mb-4 italic">&quot;{item.quote}&quot;</p>
                           <p className="font-semibold">{item.author}</p>
                           <p className="text-sm text-light dark:text-darkmode-light">{item.role}</p>
                         </div>

@@ -5,8 +5,7 @@ layout: default
 draft: false
 ---
 
-# Work With Me
-
+# If you are building a product, scaling content operations, or improving growth systems, I can support from strategy to execution.
 If you are building a product, scaling content operations, or improving growth systems, I can support from strategy to execution.
 
 ## Who This Is For

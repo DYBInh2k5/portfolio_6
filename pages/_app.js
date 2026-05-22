@@ -23,18 +23,15 @@ const App = ({ Component, pageProps }) => {
     ).then((res) => res.text().then((css) => setFontcss(css)));
   }, [pf, sf]);
 
-  // google tag manager (gtm)
-  const tagManagerArgs = {
-    gtmId: config.params.tag_manager_id,
-  };
+  // google tag manager (gtm) — read from env first then fallback to config
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || config.params.tag_manager_id;
+  const tagManagerArgs = { gtmId };
   useEffect(() => {
     setTimeout(() => {
-      process.env.NODE_ENV === "production" &&
-        config.params.tag_manager_id &&
-        TagManager.initialize(tagManagerArgs);
+      process.env.NODE_ENV === "production" && gtmId && TagManager.initialize(tagManagerArgs);
     }, 5000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [gtmId]);
 
   return (
     <JsonContext>

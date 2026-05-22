@@ -82,7 +82,7 @@ const Header = () => {
                           menu.children
                             .map((c) => c.url)
                             .includes(router.asPath) && "active"
-                        } inline-flex items-center`}
+                        } inline-flex items-center whitespace-nowrap`}
                       >
                         {menu.name}
                         <svg
@@ -114,7 +114,7 @@ const Header = () => {
                     <li className="nav-item">
                       <Link
                         href={menu.url}
-                        className={`nav-link block ${
+                        className={`nav-link block whitespace-nowrap ${
                           router.asPath === menu.url && "active"
                         }`}
                       >
