@@ -21,18 +21,18 @@
       "url": "/contact"
     },
     {
-      "name": "Projects",
-      "url": "/project"
-    },
-    {
-      "name": "Posts",
-      "url": "/posts"
-    },
-    {
-      "name": "Pages",
+      "name": "More",
       "url": "",
       "hasChildren": true,
       "children": [
+        {
+          "name": "Projects",
+          "url": "/project"
+        },
+        {
+          "name": "Posts",
+          "url": "/posts"
+        },
         {
           "name": "Categories",
           "url": "/categories"
